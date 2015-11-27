@@ -851,7 +851,7 @@ class OpenFacebook(FacebookConnection):
         '''
         me = getattr(self, '_me', None)
         if me is None:
-            self._me = me = self.get('me?fields=email,name')
+            self._me = me = self.get('me?fields=email')
 
         print("debug3 !!! ", me)
         return me
