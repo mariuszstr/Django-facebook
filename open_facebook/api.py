@@ -931,6 +931,7 @@ class OpenFacebook(FacebookConnection):
         url = self.get_request_url(path=path, old_api=old_api, version=version,
                                    **params)
         logger.info('requesting url %s', url)
+        print("debug4 make call", url)
         response = self._request(url, post_data)
         return response
 
