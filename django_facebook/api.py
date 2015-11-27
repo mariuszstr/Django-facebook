@@ -308,6 +308,7 @@ class FacebookUserConverter(object):
         Takes facebook user data and converts it to a format for
         usage with Django
         '''
+        print("debu!!!", facebook_profile_data)
         user_data = facebook_profile_data.copy()
         profile = facebook_profile_data.copy()
         website = profile.get('website')
