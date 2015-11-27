@@ -956,7 +956,11 @@ class OpenFacebook(FacebookConnection):
             path = path[1:]
 
         url = '/'.join([api_base_url, version, path])
-        return '%s?%s' % (url, urlencode(params))
+        #TODO test
+        if "?" in url:
+            return '%s&%s' % (url, urlencode(params))
+        else:
+            return '%s?%s' % (url, urlencode(params))
 
 
 class TestUser(object):
