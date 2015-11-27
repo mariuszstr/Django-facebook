@@ -850,6 +850,7 @@ class OpenFacebook(FacebookConnection):
         if me is None:
             self._me = me = self.get('me')
 
+        print("debug3 !!! ", me)
         return me
 
     def permissions(self):
