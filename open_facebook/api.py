@@ -725,6 +725,8 @@ class OpenFacebook(FacebookConnection):
         version = version or self.version
         kwargs['version'] = version
         response = self.request(path, **kwargs)
+        print("debug5 make call", path, "response", response)
+
         return response
 
     def get_many(self, *ids, **kwargs):
@@ -743,6 +745,7 @@ class OpenFacebook(FacebookConnection):
         :returns:  dict
         '''
         kwargs['ids'] = ','.join(ids)
+
         return self.request(**kwargs)
 
     def set(self, path, params=None, version=None, **post_data):
@@ -848,7 +851,7 @@ class OpenFacebook(FacebookConnection):
         '''
         me = getattr(self, '_me', None)
         if me is None:
-            self._me = me = self.get('me')
+            self._me = me = self.get('me?fields=email,name')
 
         print("debug3 !!! ", me)
         return me
