@@ -228,17 +228,18 @@ def _register_user(request, facebook, profile_callback=None,
     try:
         form = form_class(data=data, files=request.FILES,
                           initial={'ip': request.META['REMOTE_ADDR']})
+        if not form.is_valid():
+            # show errors in sentry
+            form_errors = form.errors
+            error = facebook_exceptions.IncompleteProfileError(
+                'Facebook signup incomplete')
+            error.form = form
+            raise error #TODO
+
     except facebook_exceptions.AlreadyRegistered:
         print("re raised!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         raise facebook_exceptions.AlreadyRegistered
 
-    if not form.is_valid():
-        # show errors in sentry
-        form_errors = form.errors
-        error = facebook_exceptions.IncompleteProfileError(
-            'Facebook signup incomplete')
-        error.form = form
-        raise error #TODO
 
     try:
         # for new registration systems use the backends methods of saving
