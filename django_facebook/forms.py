@@ -88,7 +88,7 @@ class FacebookRegistrationFormUniqueEmail(forms.Form):
             #request = get_request()
             #my_login(request, user)
             print("email already in use, logged in!")
-            raise AlreadyRegistered
+            raise AlreadyRegistered(_("This email address is already in use. Please supply a different email address."))
             #raise forms.ValidationError(_(
             #    "This email address is already in use. Please supply a different email address."))
         return self.cleaned_data['email']
