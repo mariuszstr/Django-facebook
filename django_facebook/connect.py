@@ -91,7 +91,7 @@ def connect_user(request, access_token=None, facebook_graph=None, connect_facebo
             try:
                 user = _register_user(request, converter,
                                       remove_old_connections=force_registration)
-            except (facebook_exceptions.AlreadyRegistered, django_facebook.exceptions.IncompleteProfileError) as e:
+            except (facebook_exceptions.AlreadyRegistered) as e:
                 # in Multithreaded environments it's possible someone beats us to
                 # the punch, in that case just login
                 logger.info(

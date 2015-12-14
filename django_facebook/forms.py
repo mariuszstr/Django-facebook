@@ -7,16 +7,16 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.auth import authenticate, login
+from django_facebook.exceptions import AlreadyRegistered
 
 from django_facebook.utils import get_user_model
 import inspect
 
 attrs_dict = {'class': 'required'}
 
-def my_login(request,user):
-    user.backend = 'django.contrib.auth.backends.ModelBackend'
-    login(request, user)
-
+# def my_login(request,user):
+#     user.backend = 'django.contrib.auth.backends.ModelBackend'
+#     login(request, user)
 
 def get_request():
     """Walk up the stack, return the nearest first argument named "request"."""
@@ -84,10 +84,11 @@ class FacebookRegistrationFormUniqueEmail(forms.Form):
         site.
         """
         if get_user_model().objects.filter(email__iexact=self.cleaned_data['email']):
-            user = get_user_model().objects.get(email__iexact=self.cleaned_data['email'])
-            request = get_request()
-            my_login(request, user)
+            #user = get_user_model().objects.get(email__iexact=self.cleaned_data['email'])
+            #request = get_request()
+            #my_login(request, user)
             print("email already in use, logged in!")
-            raise forms.ValidationError(_(
-                "This email address is already in use. Please supply a different email address."))
+            raise AlreadyRegistered
+            #raise forms.ValidationError(_(
+            #    "This email address is already in use. Please supply a different email address."))
         return self.cleaned_data['email']
