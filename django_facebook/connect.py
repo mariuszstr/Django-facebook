@@ -91,7 +91,7 @@ def connect_user(request, access_token=None, facebook_graph=None, connect_facebo
             try:
                 user = _register_user(request, converter,
                                       remove_old_connections=force_registration)
-            except facebook_exceptions.AlreadyRegistered as e:
+            except (facebook_exceptions.AlreadyRegistered, django_facebook.exceptions.IncompleteProfileError) as e:
                 # in Multithreaded environments it's possible someone beats us to
                 # the punch, in that case just login
                 logger.info(
@@ -234,7 +234,7 @@ def _register_user(request, facebook, profile_callback=None,
         error = facebook_exceptions.IncompleteProfileError(
             'Facebook signup incomplete')
         error.form = form
-        raise error
+        raise error #TODO
 
     try:
         # for new registration systems use the backends methods of saving
