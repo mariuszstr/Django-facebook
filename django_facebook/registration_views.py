@@ -21,6 +21,8 @@ def register(request):
             response = backend.post_connect(
                 request, new_user, CONNECT_ACTIONS.REGISTER)
             return response
+        else:
+          print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     else:
         form = form_class()
 
