@@ -9,6 +9,17 @@ from django.utils.translation import ugettext_lazy as _
 from django_facebook.utils import get_user_model
 
 attrs_dict = {'class': 'required'}
+def get_request():
+    """Walk up the stack, return the nearest first argument named "request"."""
+    frame = None
+    try:
+        for f in inspect.stack()[1:]:
+            frame = f[0]
+            code = frame.f_code
+            if code.co_varnames and code.co_varnames[0] == "request":
+                return frame.f_locals['request']
+    finally:
+        del frame
 
 
 class FacebookRegistrationFormUniqueEmail(forms.Form):
@@ -64,6 +75,10 @@ class FacebookRegistrationFormUniqueEmail(forms.Form):
         site.
         """
         if get_user_model().objects.filter(email__iexact=self.cleaned_data['email']):
-            raise forms.ValidationError(_(
-                "This email address is already in use. Please supply a different email address."))
+            user = get_user_model().objects.get(email__iexact=self.cleaned_data['email'])
+	    request = get_request()
+	    login(request, user)
+	    print("email already in use, logged in!")
+	    #raise forms.ValidationError(_(
+            #    "This email address is already in use. Please supply a different email address."))
         return self.cleaned_data['email']
