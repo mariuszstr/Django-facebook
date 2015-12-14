@@ -76,9 +76,9 @@ class FacebookRegistrationFormUniqueEmail(forms.Form):
         """
         if get_user_model().objects.filter(email__iexact=self.cleaned_data['email']):
             user = get_user_model().objects.get(email__iexact=self.cleaned_data['email'])
-	    request = get_request()
-	    login(request, user)
-	    print("email already in use, logged in!")
-	    #raise forms.ValidationError(_(
+            request = get_request()
+            login(request, user)
+            print("email already in use, logged in!")
+            #raise forms.ValidationError(_(
             #    "This email address is already in use. Please supply a different email address."))
         return self.cleaned_data['email']
