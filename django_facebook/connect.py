@@ -253,7 +253,8 @@ def _register_user(request, facebook, profile_callback=None,
     except facebook_exceptions.AlreadyRegistered:
         print("re raised!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!") # TODO
         raise facebook_exceptions.AlreadyRegistered(_("This email address is already in use. Please supply a different email address."))
-
+    print("debug33", data["facebook_id"])
+    print("debug34", form.cleaned_data)
 
     try:
         # for new registration systems use the backends methods of saving
