@@ -225,8 +225,12 @@ def _register_user(request, facebook, profile_callback=None,
         data['email'] = data['email'].replace(
             '@', '+test%s@' % randint(0, 1000000000))
     print("debug facebook data ", facebook_data, " data ", data)
-    form = form_class(data=data, files=request.FILES,
-                      initial={'ip': request.META['REMOTE_ADDR']})
+    try:
+        form = form_class(data=data, files=request.FILES,
+                          initial={'ip': request.META['REMOTE_ADDR']})
+    except facebook_exceptions.AlreadyRegistered:
+        print("re raised!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        raise facebook_exceptions.AlreadyRegistered
 
     if not form.is_valid():
         # show errors in sentry

@@ -10,6 +10,8 @@ from django.contrib.auth import authenticate, login
 from django_facebook.exceptions import AlreadyRegistered
 
 from django_facebook.utils import get_user_model
+from django_facebook import exceptions as facebook_exceptions
+
 import inspect
 
 attrs_dict = {'class': 'required'}
@@ -88,7 +90,7 @@ class FacebookRegistrationFormUniqueEmail(forms.Form):
             #request = get_request()
             #my_login(request, user)
             print("email already in use, logged in!")
-            raise AlreadyRegistered(_("This email address is already in use. Please supply a different email address."))
+            raise facebook_exceptions.AlreadyRegistered(_("This email address is already in use. Please supply a different email address."))
             #raise forms.ValidationError(_(
             #    "This email address is already in use. Please supply a different email address."))
         return self.cleaned_data['email']
