@@ -219,15 +219,21 @@ def _register_user(request, facebook, profile_callback=None,
 
     # gets the form class specified in FACEBOOK_REGISTRATION_FORM
     form_class = get_form_class(backend, request)
+    print("0")
 
     facebook_data = facebook.facebook_registration_data()
-
+    print("1")
     data = request.POST.copy()
+    print("2")
+
     for k, v in facebook_data.items():
         if not data.get(k):
             data[k] = v
+    print("3")
+
     if remove_old_connections:
         _remove_old_connections(facebook_data['facebook_id'])
+    print("4")
 
     if request.REQUEST.get('force_registration_hard'):
         data['email'] = data['email'].replace(
