@@ -14,6 +14,7 @@ import inspect
 attrs_dict = {'class': 'required'}
 
 def my_login(request,user):
+    user.backend = 'django.contrib.auth.backends.ModelBackend'
     login(request, user)
 
 
