@@ -12,6 +12,8 @@ from django_facebook.utils import get_registration_backend, get_form_class, \
     get_profile_model, to_bool, get_user_model, get_instance_for,\
     get_user_attribute, try_get_profile, get_model_for_attribute,\
     get_instance_for_attribute, update_user_attributes
+from django.utils.translation import ugettext_lazy as _
+
 from random import randint
 import logging
 import sys
