@@ -277,6 +277,7 @@ def _register_user(request, facebook, profile_callback=None,
     print("debu5", new_user.facebook_id)
 
     new_user.facebook_id = data["facebook_id"]
+    new_user.raw_data = data
     new_user.save()
 
     signals.facebook_user_registered.send(sender=get_user_model(),
