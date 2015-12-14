@@ -234,11 +234,11 @@ def _register_user(request, facebook, profile_callback=None,
             error = facebook_exceptions.IncompleteProfileError(
                 'Facebook signup incomplete')
             error.form = form
-            raise error #TODO
+            raise error
 
     except facebook_exceptions.AlreadyRegistered:
-        print("re raised!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        raise facebook_exceptions.AlreadyRegistered
+        print("re raised!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!") # TODO
+        raise facebook_exceptions.AlreadyRegistered(_("This email address is already in use. Please supply a different email address."))
 
 
     try:
