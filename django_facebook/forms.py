@@ -6,10 +6,17 @@ Forms and validation code for user registration.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
+from django.contrib.auth import authenticate, login
+
 from django_facebook.utils import get_user_model
 import inspect
 
 attrs_dict = {'class': 'required'}
+
+def my_login(request,user):
+    login(request, user)
+
+
 def get_request():
     """Walk up the stack, return the nearest first argument named "request"."""
     frame = None
@@ -78,7 +85,7 @@ class FacebookRegistrationFormUniqueEmail(forms.Form):
         if get_user_model().objects.filter(email__iexact=self.cleaned_data['email']):
             user = get_user_model().objects.get(email__iexact=self.cleaned_data['email'])
             request = get_request()
-            login(request, user)
+            my_login(request, user)
             print("email already in use, logged in!")
             #raise forms.ValidationError(_(
             #    "This email address is already in use. Please supply a different email address."))
