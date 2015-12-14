@@ -271,7 +271,10 @@ def _register_user(request, facebook, profile_callback=None,
         raise facebook_exceptions.AlreadyRegistered(e)
 
     # update some extra data not yet done by the form
+    print("debu4", new_user.facebook_id)
     new_user = _update_user(new_user, facebook)
+    print("debu5", new_user.facebook_id)
+
 
     signals.facebook_user_registered.send(sender=get_user_model(),
                                           user=new_user, facebook_data=facebook_data, request=request, converter=facebook)
