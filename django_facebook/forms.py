@@ -7,6 +7,7 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from django_facebook.utils import get_user_model
+import inspect
 
 attrs_dict = {'class': 'required'}
 def get_request():
